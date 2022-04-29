@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        BigInt  @id @default(autoincrement())
+  name      String  @unique
+  mail      String  @unique
+  login     String  @unique
+  password  String
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId BigInt  @map("profile_id")
+
+  @@map("user")
+}
+
+model Profile {
+  id   BigInt @id @default(autoincrement())
+  name String @unique
+
+  User User[]
+  profilePermissions ProfilePermissions[]
+
+  @@map("profile")
+}
+
+model ProfilePermissions {
+  id BigInt @id @default(autoincrement())
+  menuName String
+  menuLink String
+  readValue Boolean @default(false)
+  writeValue Boolean @default(false)
+  deleteValue Boolean @default(false)
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId BigInt  @map("profile_id")
+
+  @@map("profile_permissions")
+}
