@@ -10,27 +10,47 @@ export class UserRepository {
 
   async paginate(page: number, size: number, sort: string, order: string, search: string) {
     const results = await this.prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        login: true,
+        mail: true,
+        profile: true,
+      },
       skip: page * size,
       take: size,
       where: { name: { contains: search } },
       orderBy: { [sort]: order },
-      select: { password: false },
     });
     const totalItems = results.length;
     return { results, totalItems };
   }
 
-  async create(createUserDto: CreateUserDto): Promise<UserEntity> {
+  async create(createUserDto: CreateUserDto): Promise<any> {
     return this.prisma.user.create({
       data: createUserDto,
+      select: {
+        id: true,
+        name: true,
+        login: true,
+        mail: true,
+        profile: true,
+      },
     });
   }
-  async update(id: number, updateUserDto: UpdateUserDto): Promise<UserEntity> {
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<any> {
     return this.prisma.user.update({
       where: {
         id,
       },
       data: updateUserDto,
+      select: {
+        id: true,
+        name: true,
+        login: true,
+        mail: true,
+        profile: true,
+      },
     });
   }
 

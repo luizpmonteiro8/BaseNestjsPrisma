@@ -7,7 +7,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get('users/pages?')
+  @Get('pages?')
   async pagination(@Request() request) {
     return await this.usersService.paginate(
       request.query.hasOwnProperty('page') ? request.query.page : 0,

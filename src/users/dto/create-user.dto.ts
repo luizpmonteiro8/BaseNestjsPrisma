@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsString, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   @IsNotEmpty({ message: 'O nome não pode ser vazio.' })
@@ -18,7 +18,7 @@ export class CreateUserDto {
   @IsString({ message: 'A senha não pode ser vazio.' })
   password: string;
 
-  @IsNotEmpty({ message: 'A senha não pode ser vazio.' })
-  @IsString({ message: 'A senha não pode ser vazio.' })
-  profileId: bigint;
+  @IsNotEmpty({ message: 'O perfil não pode ser vazio.' })
+  @IsNumber({}, { message: 'O perfil não pode ser vazio.' })
+  profileId: number;
 }

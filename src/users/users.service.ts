@@ -32,7 +32,8 @@ export class UsersService {
     return this.repository.create(createUserDto);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    updateUserDto.password = await this.generatePasswordEncryption(updateUserDto.password);
     return this.repository.update(id, updateUserDto);
   }
 
