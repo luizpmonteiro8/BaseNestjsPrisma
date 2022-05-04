@@ -17,7 +17,4 @@ export class CreateProfilePermissionsDto {
 
   @IsBoolean()
   deleteValue: boolean;
-
-  @IsNumber({}, { message: 'O perfil não pode ser vazio.' })
-  readonly profileId: number;
 }

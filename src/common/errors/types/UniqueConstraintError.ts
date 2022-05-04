@@ -3,8 +3,20 @@ import { PrismaClientError } from './PrismaClientError';
 
 export class UniqueConstraintError extends ConflictError {
   constructor(e: PrismaClientError) {
-    const uniqueField = e.meta.target;
+    let uniqueField = e.meta.target;
 
-    super(`Um registro com esse campo ${uniqueField} já existe.`);
+    switch (uniqueField[0]) {
+      case 'name':
+        uniqueField = 'nome';
+        break;
+      case 'mail':
+        uniqueField = 'email';
+        break;
+
+      default:
+        break;
+    }
+
+    super(`Um registro com esse ${uniqueField} já existe.`);
   }
 }
